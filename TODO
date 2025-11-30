@@ -1,0 +1,74 @@
+11/15/2025
+Nicolas Holmgren
+
+
+!! The creation of this TODO was done with the help of AI, and was created with the 
+!! intention of helping out with an outline and project layout
+
+
+
+# Project: UCSD Campus Shortest Path Finder (Dijkstra's Algorithm)
+
+## Project Overview
+A Discrete Structures research project to visualize the shortest path between locations on the UCSD campus using Dijkstra's Algorithm. The application will use a Google Maps API with a custom graph of nodes and edges.
+
+## Requirements
+1.  **Algorithm**: Implement Dijkstra's Algorithm for shortest path finding.
+2.  **Map Provider**: Google Maps JavaScript API.
+3.  **Scope**: Restricted to UCSD Campus geography.
+4.  **Data**: Custom graph implementation (Nodes & Edges) using in-memory Python structures (Lists/Dictionaries).
+5.  **Features**:
+    *   Search functionality for buildings/halls.
+    *   Visual overlay of the custom graph.
+    *   Visual rendering of the calculated shortest path.
+
+---
+
+## TODO List
+
+### Phase 1: Setup & Configuration
+- [x] **Google Maps API**:
+    - [x] Obtain Google Maps JavaScript API Key.
+    - [x] Securely configure the API key in Django settings (`.env` or `settings.py`).
+- [x] **Django Setup**:
+    - [x] Ensure static files are configured for serving JS/CSS.
+    - [x] Create a base template for the map view.
+
+### Phase 2: Data Modeling (The Graph)
+- [x] **Data Structure (In-Memory)**:
+    - [x] Define `NODES` list in `views.py` (Dictionaries with `id`, `name`, `lat`, `lng`).
+    - [x] Define `EDGE_CONNECTIONS` list in `views.py` (Tuples of `("Start Name", "End Name")`).
+    - [x] Implement helper function to calculate edge weights (distance) automatically.
+- [X] **Data Entry**:
+    - [x] Expand `NODES` list with more UCSD locations.
+    - [x] Expand `EDGE_CONNECTIONS` to fully connect the graph.
+
+### Phase 3: Backend Logic (Dijkstra's Algorithm)
+- [ ] **Graph Representation**:
+    - [ ] Convert the `NODES` and `EDGES` lists into an Adjacency List (Dictionary) for the algorithm.
+- [ ] **Algorithm Implementation**:
+    - [ ] Implement Dijkstra's algorithm in a Python utility file or inside `views.py`.
+    - [ ] Input: `start_node_name`, `end_node_name`.
+    - [ ] Output: Ordered list of coordinates representing the path.
+- [ ] **API Endpoint / View Logic**:
+    - [ ] Update `home` view to accept form data (Start/End).
+    - [ ] Run Dijkstra's algorithm on request.
+    - [ ] Pass the calculated path to the template context.
+
+### Phase 4: Frontend & Map Visualization
+- [x] **Map Initialization**:
+    - [x] Render Google Map centered on UCSD.
+    - [x] Restrict map bounds to campus area.
+- [ ] **Search Interface**:
+    - [ ] Create HTML form/dropdowns for users to select "Start" and "Destination" nodes.
+- [ ] **Visualization**:
+    - [x] **Edges Overlay**: Draw lines (Polylines) representing the custom graph edges.
+    - [ ] **Path Rendering**: Draw a specific Polyline (different color) for the shortest path result.
+
+### Phase 5: Testing & Refinement
+- [ ] **Validation**:
+    - [ ] Verify that the custom nodes align correctly with the Google Maps satellite/street view.
+    - [ ] Test Dijkstra's logic with known short/long paths.
+- [ ] **UI Polish**:
+    - [ ] Make the overlay look clean.
+    - [ ] Add markers for Start and End points.

@@ -1,0 +1,84 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+}
+
+.main-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+.map-wrapper {
+    flex: 3; /* Takes up 75% of width */
+    height: 100%;
+}
+
+gmp-map {
+    height: 100%;
+    width: 100%;
+}
+
+.controls-wrapper {
+    flex: 1; /* Takes up 25% of width */
+    background-color: white;
+    padding: 20px;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    z-index: 10;
+    overflow-y: auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.node-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.action-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.action-btn:hover {
+    background-color: #0056b3;
+}
+
+html,
+body {
+  height: 700px;
+  width: 10px;
+  margin: 100;
+  padding: 100;
+  background-color: #1f2937;
+  /* text-align: center; */
+}
+
+.place-picker-container {
+  padding: 20px;
+  height: 500px;
+  width: 20px;
+}
