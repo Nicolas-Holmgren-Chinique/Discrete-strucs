@@ -44,31 +44,38 @@ A Discrete Structures research project to visualize the shortest path between lo
     - [x] Expand `EDGE_CONNECTIONS` to fully connect the graph.
 
 ### Phase 3: Backend Logic (Dijkstra's Algorithm)
-- [ ] **Graph Representation**:
-    - [ ] Convert the `NODES` and `EDGES` lists into an Adjacency List (Dictionary) for the algorithm.
-- [ ] **Algorithm Implementation**:
-    - [ ] Implement Dijkstra's algorithm in a Python utility file or inside `views.py`.
-    - [ ] Input: `start_node_name`, `end_node_name`.
-    - [ ] Output: Ordered list of coordinates representing the path.
-- [ ] **API Endpoint / View Logic**:
-    - [ ] Update `home` view to accept form data (Start/End).
-    - [ ] Run Dijkstra's algorithm on request.
-    - [ ] Pass the calculated path to the template context.
+- [x] **Graph Representation**:
+    - [x] Convert the `NODES` and `EDGES` lists into an Adjacency List (Dictionary) for the algorithm.
+- [x] **Algorithm Implementation**:
+    - [x] Implement Dijkstra's algorithm in a Python utility file or inside `views.py`.
+    - [x] Input: `start_node_name`, `end_node_name`.
+    - [x] Output: Ordered list of coordinates representing the path.
+- [x] **API Endpoint / View Logic**:
+    - [x] Update `home` view to accept form data (Start/End).
+    - [x] Run Dijkstra's algorithm on request.
+    - [x] Pass the calculated path to the template context.
 
 ### Phase 4: Frontend & Map Visualization
 - [x] **Map Initialization**:
     - [x] Render Google Map centered on UCSD.
     - [x] Restrict map bounds to campus area.
-- [ ] **Search Interface**:
-    - [ ] Create HTML form/dropdowns for users to select "Start" and "Destination" nodes.
-- [ ] **Visualization**:
+- [x] **Search Interface**:
+    - [x] Create HTML form/dropdowns for users to select "Start" and "Destination" nodes.
+- [x] **Visualization**:
     - [x] **Edges Overlay**: Draw lines (Polylines) representing the custom graph edges.
-    - [ ] **Path Rendering**: Draw a specific Polyline (different color) for the shortest path result.
+    - [x] **Path Rendering**: Draw a specific Polyline (different color) for the shortest path result.
 
 ### Phase 5: Testing & Refinement
-- [ ] **Validation**:
-    - [ ] Verify that the custom nodes align correctly with the Google Maps satellite/street view.
-    - [ ] Test Dijkstra's logic with known short/long paths.
-- [ ] **UI Polish**:
-    - [ ] Make the overlay look clean.
-    - [ ] Add markers for Start and End points.
+- [x] **Validation**:
+    - [x] Verify that the custom nodes align correctly with the Google Maps satellite/street view.
+    - [x] Test Dijkstra's logic with known short/long paths.
+- [x] **UI Polish**:
+    - [x] Make the overlay look clean.
+    - [x] Add markers for Start and End points.
+    - [x] **Split View**: Added Vis.js graph visualization alongside Google Maps.
+    - [x] **Dark Mode**: Implemented theme toggling.
+    - [x] **Animation**: Added step-by-step visualization of the search process.
+    - [x] **Speed Control**: Added dropdown to control animation speed.
+
+
+

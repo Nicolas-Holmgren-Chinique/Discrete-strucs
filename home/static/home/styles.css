@@ -1,64 +1,142 @@
+:root {
+    --bg-color: #f0f2f5;
+    --text-color: #333;
+    --panel-bg: #fff;
+    --border-color: #ddd;
+    --header-bg: #fff;
+    --input-bg: #fff;
+    --input-border: #ccc;
+    --table-header-bg: #f8f9fa;
+    --table-hover: #f1f1f1;
+    --stats-bg: #e9ecef;
+    --map-placeholder: #e0e0e0;
+    --graph-bg: #ffffff;
+}
+
+[data-theme="dark"] {
+    --bg-color: #18191a;
+    --text-color: #e4e6eb;
+    --panel-bg: #242526;
+    --border-color: #3e4042;
+    --header-bg: #242526;
+    --input-bg: #3a3b3c;
+    --input-border: #3e4042;
+    --table-header-bg: #3a3b3c;
+    --table-hover: #303031;
+    --stats-bg: #3a3b3c;
+    --map-placeholder: #3a3b3c;
+    --graph-bg: #242526;
+}
+
 body, html {
     margin: 0;
     padding: 0;
     height: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f2f5;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow: hidden; /* Prevent body scroll, handle in sections */
 }
 
 .main-container {
     display: flex;
+    flex-direction: column;
     height: 100vh;
     width: 100%;
 }
 
-.map-wrapper {
-    flex: 3; /* Takes up 75% of width */
-    height: 100%;
+/* Top Section: Map and Graph */
+.top-section {
+    display: flex;
+    flex: 1; /* Takes remaining height */
+    min-height: 0; /* Important for nested flex scrolling */
+    border-bottom: 2px solid var(--border-color);
+}
+
+.map-container, .graph-container {
+    flex: 1; /* 50% width each */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color);
+}
+
+.map-container:last-child {
+    border-right: none;
+}
+
+.map-container h2, .graph-container h2 {
+    margin: 0;
+    padding: 10px;
+    background-color: var(--header-bg);
+    color: var(--text-color);
+    text-align: center;
+    font-size: 1.2rem;
+    border-bottom: 1px solid var(--border-color);
+    z-index: 10;
 }
 
 gmp-map {
-    height: 100%;
+    flex: 1;
     width: 100%;
+    height: 100%;
+    display: block; /* Ensure it's block level */
+    background-color: var(--map-placeholder); /* Placeholder color */
 }
 
-.controls-wrapper {
-    flex: 1; /* Takes up 25% of width */
-    background-color: white;
-    padding: 20px;
-    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
-    z-index: 10;
+#mynetwork {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    background-color: var(--graph-bg);
+}
+
+/* Bottom Section: Controls and Table */
+.bottom-section {
+    height: 40%; /* Fixed height for bottom section */
+    background-color: var(--panel-bg);
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
     overflow-y: auto;
 }
 
-.form-group {
-    margin-bottom: 20px;
+.controls-area {
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
 }
 
-label {
-    display: block;
-    margin-bottom: 8px;
+.control-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.control-group label {
+    margin-bottom: 5px;
     font-weight: bold;
-    color: #333;
+    color: var(--text-color);
 }
 
 .node-select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
+    padding: 8px;
+    border: 1px solid var(--input-border);
+    background-color: var(--input-bg);
+    color: var(--text-color);
     border-radius: 4px;
-    font-size: 14px;
+    min-width: 200px;
 }
 
 .action-btn {
-    width: 100%;
-    padding: 12px;
+    padding: 10px 20px;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
     font-weight: bold;
     transition: background-color 0.2s;
 }
@@ -67,18 +145,132 @@ label {
     background-color: #0056b3;
 }
 
-html,
-body {
-  height: 700px;
-  width: 10px;
-  margin: 100;
-  padding: 100;
-  background-color: #1f2937;
-  /* text-align: center; */
+.clear-btn {
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-.place-picker-container {
-  padding: 20px;
-  height: 500px;
-  width: 20px;
+.clear-btn:hover {
+    background-color: #5a6268;
+}
+
+.theme-btn {
+    padding: 10px 20px;
+    background-color: #343a40;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: auto; /* Push to right */
+}
+
+.theme-btn:hover {
+    background-color: #23272b;
+}
+
+.stats-area {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: var(--stats-bg);
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stats-area p {
+    margin: 0;
+    font-weight: 500;
+}
+
+#time-text {
+    color: #3B82F6;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* Table Styles */
+.table-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.table-container h3 {
+    margin: 0 0 10px 0;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.table-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+}
+
+#log-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+#log-table th, #log-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#log-table th {
+    background-color: var(--table-header-bg);
+    position: sticky;
+    top: 0;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+#log-table tr:hover {
+    background-color: var(--table-hover);
+}
+
+.status-visiting {
+    color: #F59E0B;
+    font-weight: bold;
+}
+
+.status-checked {
+    color: #3B82F6;
+}
+
+/* Map Node Marker Style */
+.map-node-marker {
+    background-color: #1E293B; /* Slate 800 */
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    cursor: pointer;
+    transition: transform 0.2s;
+    text-align: center;
+    line-height: 1;
+}
+
+.map-node-marker:hover {
+    transform: scale(1.1);
+    background-color: #3B82F6; /* Blue on hover */
+    z-index: 100;
 }

@@ -2,23 +2,124 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>UCSD Dijkstras</title>
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/@googlemaps/extended-component-library/0.6.11/index.min.js">
-    </script>
-    <link rel="stylesheet" href="{% static 'home/styles.css' %}"/>
+    <title>UCSD Shortest Path</title>
+    
+    <!-- 1. EXTERNAL LIBRARIES -->
+    <!-- Google Maps Web Components: Allows us to use <gmp-map> tags -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/@googlemaps/extended-component-library/0.6.11/index.min.js"></script>
+    <!-- Vis.js: A library for visualizing networks and graphs -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{% static 'home/styles.css' %}?v=1.1"/>
   </head>
   <body>
-    <gmpx-api-loader key="{{ google_maps_api_key }}" solution-channel="GMP_GE_mapsandplacesautocomplete_v2">
-    </gmpx-api-loader>
+    
+    <!-- 2. API KEY CHECK -->
+    <!-- If the API key is missing in Django settings, show an error banner -->
+    {% if not google_maps_api_key %}
+        <div style="background-color: #ffcccc; padding: 10px; text-align: center; border-bottom: 1px solid #ff0000;">
+            <strong>Error:</strong> Google Maps API Key is missing! Please check your .env file.
+        </div>
+    {% else %}
+        <!-- Load the Google Maps API securely using the key passed from views.py -->
+        <gmpx-api-loader key="{{ google_maps_api_key }}" solution-channel="GMP_GE_mapsandplacesautocomplete_v2">
+        </gmpx-api-loader>
+    {% endif %}
 
-    <!-- Map centered on UCSD campus using coordinates  -->
-    <gmp-map center="32.8804, -117.23602" zoom="17" map-id="DEMO_MAP_ID" style="height: 500px; width: 650px;">
-      <div slot="control-block-start-inline-start" class="place-picker-container">
-        <gmpx-place-picker placeholder="Enter an address"></gmpx-place-picker>
-      </div>
-      <gmp-advanced-marker></gmp-advanced-marker>
-    </gmp-map>
-    <script src="{% static 'home/index.js' %}"></script>
+    <div class="main-container">
+        <!-- 3. TOP SECTION: VISUALIZATION -->
+        <div class="top-section">
+            
+            <!-- Left: Google Map (Real World View) -->
+            <div class="map-container">
+                <h2>Campus Map</h2>
+                <!-- The <gmp-map> component handles the map rendering -->
+                <gmp-map center="32.8804, -117.23602" zoom="16" map-id="DEMO_MAP_ID">
+                    <gmp-advanced-marker></gmp-advanced-marker>
+                </gmp-map>
+                <div id="map-fallback" style="display: none; padding: 20px; text-align: center; color: #666;">
+                    Map is loading... (If this persists, check your API Key or Internet Connection)
+                </div>
+            </div>
+
+            <!-- Right: Graph Visualization (Abstract View) -->
+            <div class="graph-container">
+                <h2>Graph Representation</h2>
+                <!-- Vis.js will inject the network graph into this div -->
+                <div id="mynetwork"></div>
+            </div>
+        </div>
+
+        <!-- 4. BOTTOM SECTION: CONTROLS & LOGS -->
+        <div class="bottom-section">
+            
+            <!-- User Controls -->
+            <div class="controls-area">
+                <div class="control-group">
+                    <label for="start-node">Start Location:</label>
+                    <select id="start-node" class="node-select"></select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="end-node">Destination:</label>
+                    <select id="end-node" class="node-select"></select>
+                </div>
+
+                <div class="control-group">
+                    <label for="speed-select">Animation Speed:</label>
+                    <select id="speed-select" class="node-select">
+                        <option value="20">Very Fast</option>
+                        <option value="50" selected>Fast</option>
+                        <option value="200">Normal</option>
+                        <option value="500">Slow</option>
+                        <option value="1000">Very Slow</option>
+                    </select>
+                </div>
+
+                <button onclick="startDijkstra()" class="action-btn">Find Shortest Path</button>
+                <button onclick="clearMap()" class="clear-btn">Clear</button>
+                <button onclick="toggleTheme()" class="theme-btn" id="theme-toggle">Dark Mode</button>
+            </div>
+
+            <!-- Status Messages -->
+            <div class="stats-area">
+                <p id="status-text">Select start and end points to begin.</p>
+                <p id="time-text"></p>
+            </div>
+
+            <!-- Execution Log Table -->
+            <div class="table-container">
+                <h3>Algorithm Execution Log</h3>
+                <div class="table-wrapper">
+                    <table id="log-table">
+                        <thead>
+                            <tr>
+                                <th>Step</th>
+                                <th>Current Node</th>
+                                <th>Checking Neighbor</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Rows will be added here dynamically by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. DATA TRANSFER -->
+    <!-- We pass the Python data (Nodes/Edges) to JavaScript variables here -->
+    <script>
+        const CAMPUS_NODES = {{ nodes_json|safe }};
+        const CAMPUS_EDGES = {{ edges_json|safe }};
+    </script>
+    
+    <!-- Load our main JavaScript logic -->
+    <script src="{% static 'home/index.js' %}?v=1.1"></script>
   </body>
 </html>
+
 
