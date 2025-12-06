@@ -180,10 +180,13 @@ def calculate_route(request):
     node_lookup = {n['name']: n for n in NODES}
     graph = {n['name']: [] for n in NODES}
 
+# in this loop we populate the graph adjacency list with each node and its neighbors along with the distance weights
+# a represents the source node name and b represents the destination node name
     for a, b in EDGE_CONNECTIONS:
         na, nb = node_lookup.get(a), node_lookup.get(b)
         if not na or not nb:
             continue
+        # to get the distance we call the calc function and pass in the two vertices to find the distance between them
         dist = calculate_distance(na['lat'], na['lng'], nb['lat'], nb['lng'])
         graph[a].append((b, dist))
         graph[b].append((a, dist))  # Undirected graph
@@ -191,9 +194,9 @@ def calculate_route(request):
 
     # Dijkstra's algorithm with a log using a priotiry queue which is more efficient and allows us to do better pathfinding
 
-    pq = [(0, start_node)]
-    distances = {node['name']: float('inf') for node in NODES}
-    distances[start_node] = 0
+    pq = [(0, start_node)] # priority queue initialized with the start node and distance 0
+    distances = {node['name']: float('inf') for node in NODES} # all unvisted node are set to infinity as we dont know their dstances yet
+    distances[start_node] = 0 # here we set the starting vertx to 0 as we are starting from there
     previous = {}
 
     # Log to trace computation and track each visited node 
